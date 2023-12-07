@@ -1,6 +1,6 @@
 import { open } from "node:fs/promises";
 
-part1();
+part2();
 
 async function part1() {
   const file = await open("./input.txt");
@@ -43,3 +43,46 @@ async function part1() {
   console.log("Part 1 Result:", output);
   // 54601
 }
+
+async function part2() {
+  const file = await open("./input.txt");
+  let output = 0;
+
+  for await (const line of file.readLines()) {
+    const gameRecord = line.split(":");
+    const gameId = gameRecord[0].substring(5, gameRecord[0].length);
+    const sets = gameRecord[1].split(";");
+
+    let blueCubes = [];
+    let greenCubes = [];
+    let redCubes = [];
+
+    sets.forEach((set) => {
+      const cubes = set.split(",");
+      cubes.forEach((cube) => {
+        const [amount, name] = cube.trim().split(" ");
+        switch (name.length) {
+          case 3:
+            redCubes.push(Number.parseInt(amount));
+            break;
+          case 4:
+            blueCubes.push(Number.parseInt(amount));
+            break;
+          case 5:
+            greenCubes.push(Number.parseInt(amount));
+            break;
+        }
+      });
+    });
+
+    const maxBlueCubes = Math.max(...blueCubes);
+    const maxGreenCubes = Math.max(...greenCubes);
+    const maxRedCubes = Math.max(...redCubes);
+
+    output += maxBlueCubes * maxGreenCubes * maxRedCubes;
+  }
+
+  console.log("Part 1 Result:", output);
+  // 54601
+}
+  
