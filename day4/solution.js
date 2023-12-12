@@ -35,7 +35,17 @@ async function part2() {
   let output = 0;
 
   for await (const line of file.readLines()) {
-    originalLines.push(line);
+    const [left, right] = line.split("|");
+    const winningNrs = left
+      .split(":")[1]
+      .split(" ")
+      .filter((nr) => nr != "");
+    const myNrs = right.split(" ").filter((nr) => nr != "");
+
+    originalLines.push({
+      nr: Number.parseInt(left.substring(4, 8).trim()),
+      amountWon: winningNrs.filter((nr) => myNrs.includes(nr)).length,
+    });
   }
 
   function iterateLines(lines) {
@@ -43,19 +53,10 @@ async function part2() {
     let new_array = [];
 
     lines.forEach((line) => {
-      const [left, right] = line.split("|");
-      const cardNr = Number.parseInt(left.substring(4, 8).trim());
-      const winningNrs = left
-        .split(":")[1]
-        .split(" ")
-        .filter((nr) => nr != "");
-      const myNrs = right.split(" ").filter((nr) => nr != "");
-      const amountWon = winningNrs.filter((nr) => myNrs.includes(nr)).length;
-
       // win any number of additional cards
-      for (let i = 0; i < amountWon; i++) {
-        if (cardNr + i <= originalLines.length)
-          new_array.push(originalLines[cardNr + i]);
+      for (let i = 0; i < line.amountWon; i++) {
+        if (line.nr + i <= originalLines.length)
+          new_array.push(originalLines[line.nr + i]);
       }
     });
 
@@ -63,6 +64,6 @@ async function part2() {
   }
 
   iterateLines(originalLines);
-  console.log("Part 1 Result:", output);
+  console.log("Part 2 Result:", output); // 6050769
 }
   
