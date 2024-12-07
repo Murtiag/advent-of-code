@@ -21,13 +21,19 @@ async function solution() {
   const checkYPos = (posY) => posY + 3 <= wordMatrix.length - 1;
   const checkYNeg = (posY) => posY - 3 >= 0;
 
+  // Letter checks
+  const checkLetter = (posY, posX, letter) => wordMatrix[posY][posX] === letter;
+  const checkLetterM = (posY, posX) => checkLetter(posY, posX, "M");
+  const checkLetterA = (posY, posX) => checkLetter(posY, posX, "A");
+  const checkLetterS = (posY, posX) => checkLetter(posY, posX, "S");
+
   // Occurence checks
   function checkNorth(posX, posY) {
     if (checkYNeg(posY)) {
       if (
-        wordMatrix[posY - 1][posX] === "M" &&
-        wordMatrix[posY - 2][posX] === "A" &&
-        wordMatrix[posY - 3][posX] === "S"
+        checkLetterM(posY - 1, posX) &&
+        checkLetterA(posY - 2, posX) &&
+        checkLetterS(posY - 3, posX)
       ) {
         occurences += 1;
       }
@@ -37,9 +43,9 @@ async function solution() {
   function checkNorthEast(posX, posY) {
     if (checkYNeg(posY) && checkXPosYNeg(posX, posY)) {
       if (
-        wordMatrix[posY - 1][posX + 1] === "M" &&
-        wordMatrix[posY - 2][posX + 2] === "A" &&
-        wordMatrix[posY - 3][posX + 3] === "S"
+        checkLetterM(posY - 1, posX + 1) &&
+        checkLetterA(posY - 2, posX + 2) &&
+        checkLetterS(posY - 3, posX + 3)
       ) {
         occurences += 1;
       }
@@ -49,9 +55,9 @@ async function solution() {
   function checkEast(posX, posY) {
     if (checkXPos(posX, posY)) {
       if (
-        wordMatrix[posY][posX + 1] === "M" &&
-        wordMatrix[posY][posX + 2] === "A" &&
-        wordMatrix[posY][posX + 3] === "S"
+        checkLetterM(posY, posX + 1) &&
+        checkLetterA(posY, posX + 2) &&
+        checkLetterS(posY, posX + 3)
       ) {
         occurences += 1;
       }
@@ -61,9 +67,9 @@ async function solution() {
   function checkSouthEast(posX, posY) {
     if (checkYPos(posY) && checkXposYPos(posX, posY)) {
       if (
-        wordMatrix[posY + 1][posX + 1] === "M" &&
-        wordMatrix[posY + 2][posX + 2] === "A" &&
-        wordMatrix[posY + 3][posX + 3] === "S"
+        checkLetterM(posY + 1, posX + 1) &&
+        checkLetterA(posY + 2, posX + 2) &&
+        checkLetterS(posY + 3, posX + 3)
       ) {
         occurences += 1;
       }
@@ -73,9 +79,9 @@ async function solution() {
   function checkSouth(posX, posY) {
     if (checkYPos(posY)) {
       if (
-        wordMatrix[posY + 1][posX] === "M" &&
-        wordMatrix[posY + 2][posX] === "A" &&
-        wordMatrix[posY + 3][posX] === "S"
+        checkLetterM(posY + 1, posX) &&
+        checkLetterA(posY + 2, posX) &&
+        checkLetterS(posY + 3, posX)
       ) {
         occurences += 1;
       }
@@ -85,9 +91,9 @@ async function solution() {
   function checkSouthWest(posX, posY) {
     if (checkYPos(posY) && checkXNeg(posX)) {
       if (
-        wordMatrix[posY + 1][posX - 1] === "M" &&
-        wordMatrix[posY + 2][posX - 2] === "A" &&
-        wordMatrix[posY + 3][posX - 3] === "S"
+        checkLetterM(posY + 1, posX - 1) &&
+        checkLetterA(posY + 2, posX - 2) &&
+        checkLetterS(posY + 3, posX - 3)
       ) {
         occurences += 1;
       }
@@ -97,9 +103,9 @@ async function solution() {
   function checkWest(posX, posY) {
     if (checkXNeg(posX)) {
       if (
-        wordMatrix[posY][posX - 1] === "M" &&
-        wordMatrix[posY][posX - 2] === "A" &&
-        wordMatrix[posY][posX - 3] === "S"
+        checkLetterM(posY, posX - 1) &&
+        checkLetterA(posY, posX - 2) &&
+        checkLetterS(posY, posX - 3)
       ) {
         occurences += 1;
       }
@@ -109,9 +115,9 @@ async function solution() {
   function checkNorthWest(posX, posY) {
     if (checkYNeg(posY) && checkXNeg(posX)) {
       if (
-        wordMatrix[posY - 1][posX - 1] === "M" &&
-        wordMatrix[posY - 2][posX - 2] === "A" &&
-        wordMatrix[posY - 3][posX - 3] === "S"
+        checkLetterM(posY - 1, posX - 1) &&
+        checkLetterA(posY - 2, posX - 2) &&
+        checkLetterS(posY - 3, posX - 3)
       ) {
         occurences += 1;
       }
